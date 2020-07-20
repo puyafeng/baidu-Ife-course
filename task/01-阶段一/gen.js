@@ -22,15 +22,25 @@ let source = `任务一：面向零基础的HTML代码编写
 任务十一：移动Web开发入门，按照设计稿实现一个移动端的页面
 
 任务十二：CSS 3新特性的小练习`;
-source = source.replace(/ +/g,"");
+source = source.replace(/ +/g, "").replace(/\//g, "、");
 console.log(source);
 let array = source.split(/\n+/g);
 console.log(array);
-array.map((ele,index)=>{
-    return "";
+array = array.map((ele, index) => {
+    return (index + 1 + "").replace(/(^\d$)/g, "0$1") + "-" + ele;
 });
-array.forEach((ele,index)=>{
-
-    console.log(index);
+var fs = require('fs');
+array.forEach(ele => {
+    fs.mkdir(ele, function (err) {
+        if (!err) {
+            console.log(ele);
+            fs.writeFile(`./${ele}/ReadMe.md`, "", function (err, data) {
+                if (err) {
+                    console.log(err);
+                }
+            });
+        } else {
+            console.log(err);
+        }
+    });
 });
-// fs.mkdirSync();
